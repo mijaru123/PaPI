@@ -9,6 +9,7 @@ def main():
     # Loop round the plugins and print their names.
     for plugin in manager.getAllPlugins():
         plugin.plugin_object.print_name()
+	#tt
 
 if __name__ == "__main__":
     main()
