@@ -1,0 +1,10 @@
+[Core]
+Name = StatusbarP
+Module = statusbar_process
+
+[Documentation]
+Author = STef
+Version = 1.0
+Website = 
+Description = Adds a statusbar to the window with the text "Hello World" in a new Process
+
