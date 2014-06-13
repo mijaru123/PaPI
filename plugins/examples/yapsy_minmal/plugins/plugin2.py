@@ -6,8 +6,7 @@ class PluginTwo(IPlugin):
     def pro(self,l):
         while(1):
            # print ("This is TEST Plugin with number")
-            l[1]=l[1]+1
-            #print(l)
+            print(l.value)
 
 
     def print_name(self,l):
