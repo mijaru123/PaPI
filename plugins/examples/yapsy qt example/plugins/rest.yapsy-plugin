@@ -1,0 +1,9 @@
+[Core]
+Name = Restructured Text
+Module = rest
+
+[Documentation]
+Author = Roberto Alsina
+Version = 0.1
+Website = http://lateral.netmanagers.com.ar
+Description = Formats restructured text
