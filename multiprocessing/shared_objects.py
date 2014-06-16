@@ -44,9 +44,9 @@ def process(lock, shared_object):
     try:
         with lock:
             shared_object.modify(new_value=1, modifier_pid=current_process().name)
-        print "FOO %s: %s" % (current_process().name, shared_object)
+        print ("FOO %s: %s" % (current_process().name, shared_object))
     except:
-        print "FATAL: %s running process(%s, %s) exited with %s" % (current_process().name, lock, shared_object, sys.exc_info())
+        print ("FATAL: %s running process(%s, %s) exited with %s" % (current_process().name, lock, shared_object, sys.exc_info()))
 
 if __name__=='__main__':
     manager = ScriptManager()
