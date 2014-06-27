@@ -49,7 +49,7 @@ class IOP1(IPlugin):
             for i in range(10):
                 sharedArr_time[i] = t
                 sharedArr_value[i] = 1/t
-                t += 1
+                t += 0.1
             lock.release()
             CoreQueue.put(['IOP', 'Data'])
             time.sleep(0.5)
