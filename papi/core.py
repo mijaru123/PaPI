@@ -5,7 +5,7 @@ from yapsy.PluginManager import PluginManager
 from multiprocessing import Process, Value, Array, Lock, Queue
 import time
 import os
-#import gui
+import papi.gui
 
 def main():
     # for better process tracking, print process ID of core process
