@@ -2,7 +2,7 @@ __author__ = 'control'
 
 
 from yapsy.PluginManager import PluginManager
-from multiprocessing import Process, Value, Array, Lock, Queue
+from multiprocessing import Process, Array, Lock, Queue
 import time
 import os
 
@@ -29,14 +29,14 @@ def main():
 
 
     # shared memory array, represents buffer in core process
-    sharedArr_time = Array('d',range(100))
-    sharedArr_value = Array('d',range(100))
+    sharedArr_time = Array('d',range(10))
+    sharedArr_value = Array('d',range(10))
 
 
 
     plugin = manager.getPluginByName('IOP1')
     IOPProcess =  Process(target=plugin.plugin_object.start_plugin, args=(CoreQueue,IOPQueue,sharedArr_time,sharedArr_value,lock) )
-    IOPProcess.start();
+    IOPProcess.start()
 
 
 
@@ -54,7 +54,6 @@ def main():
         # blocking till there is a element to get form queue
         # blocking is no active waiting -> low cpu usage
         event = CoreQueue.get()
-        #print("Core: got event ",event[1]," from plugin ", event[0])
         if event[0] == 'IOP':
             if event[1] == 'Data':
                 # new Data available, notice GUI
@@ -77,14 +76,14 @@ def main():
             if event[1] == 'Join':
                 # join the GUI
                 print('Core: GUI ended and needs a join')
-                # GUIProcess.join()
+                GUIProcess.join()
                 GUIalive = 0
 
             if event[1] == 'EndJoin':
                 # GUI asks for END
                 print('Core: GUI initiated termination')
                 IOPQueue.put(['Core','End'])
-                # GUIProcess.join()
+                GUIProcess.join()
                 GUIalive = 0
 
         goOn = (GUIalive | IOPalive )
