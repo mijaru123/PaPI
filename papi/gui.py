@@ -56,6 +56,7 @@ class GUI(QMainWindow, Ui_MainWindow):
         self.showLicense.clicked.connect(self.fn_fileRead)
         self.addPlot.clicked.connect(self.fn_addPlot)
         self.delPlot.clicked.connect(self.fn_delPlot)
+        self.quitButton.clicked.connect(self.fn_quit)
 
         self.coreq = CoreQueue
         self.guiq = GUIQueue
@@ -104,6 +105,10 @@ class GUI(QMainWindow, Ui_MainWindow):
         if event[0] == 'Core':
             if event[1] == 'Data':
                 print("GUI: New Data")
+
+    def fn_quit(self):
+        self.sendEventToCore(['GUI','EndJoin'])
+        self.close()
 
     def sendEventToCore(self,event):
         """
