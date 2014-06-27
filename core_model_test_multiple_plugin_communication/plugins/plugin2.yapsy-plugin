@@ -1,0 +1,9 @@
+[Core]
+Name = Plugin 2
+Module = plugin2
+
+[Documentation]
+Author = S.R
+Version = 0.1
+Website = www
+Description = test plugin2 shared memory
