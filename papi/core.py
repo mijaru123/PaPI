@@ -5,7 +5,7 @@ from yapsy.PluginManager import PluginManager
 from multiprocessing import Process, Value, Array, Lock, Queue
 import time
 import os
-import papi.gui
+#import papi.gui
 
 def main():
     # for better process tracking, print process ID of core process
@@ -49,7 +49,6 @@ def main():
     goOn = 1;
     IOPalive = 1;
     GUIalive = 1;
-
     while goOn:
         # blocking till there is a element to get form queue
         # blocking is no active waiting -> low cpu usage
@@ -87,7 +86,7 @@ def main():
                 # GUIProcess.join()
                 GUIalive = 0
 
-        goOn = GUIalive | IOPalive
+        goOn = (GUIalive | IOPalive )
 
     # prints this debug message when core process finished/exits
     print("Core: Core is finished")

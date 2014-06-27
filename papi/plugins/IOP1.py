@@ -52,5 +52,5 @@ class IOP1(IPlugin):
             time.sleep(0.1)
             t += 1
             CoreQueue.put(['IOP', 'Data'])
-
+        print('IOP1: is finished')
 
