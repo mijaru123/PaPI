@@ -25,16 +25,21 @@ along with PaPI.  If not, see <http://www.gnu.org/licenses/>.
 Contributors
 Sven Knuth
 """
+from papi import VPlugin
 
 __author__ = 'control'
 
-import sys
-import math
-from PySide.QtGui import QMainWindow, QPushButton, QApplication, QTextEdit, QToolBar, QLayoutItem, QWidget
-from PySide import QtCore, QtGui
 
-import numpy as np
+
+
+import sys
+
+from PySide.QtGui import QMainWindow, QApplication
+
+from multiprocessing import Process, Value, Array, Lock, Queue
+
 import pyqtgraph as pg
+import time
 
 from pyqtgraph import QtGui, QtCore
 
@@ -42,15 +47,26 @@ from pyqtgraph import QtGui, QtCore
 pg.setConfigOptions(antialias=True)
 
 from papi.ui.ui_quitter import Ui_MainWindow
-from papi.plugins.VPlugin import VPlugin
 
-class MainWindow(QMainWindow, Ui_MainWindow):
-    def __init__(self, parent=None):
-        super(MainWindow, self).__init__(parent)
+
+class GUI(QMainWindow, Ui_MainWindow):
+    goOn = 1;
+    def __init__(self, parent=None, CoreQueue=Queue(), GUIQueue=Queue(), timeArr=[], valueArr=[], lock=Lock() ):
+        super(GUI, self).__init__(parent)
         self.setupUi(self)
         self.showLicense.clicked.connect(self.fn_fileRead)
         self.addPlot.clicked.connect(self.fn_addPlot)
         self.delPlot.clicked.connect(self.fn_delPlot)
+
+        self.coreq = CoreQueue
+        self.guiq = GUIQueue
+        self.valueArr = valueArr
+        self.timeArr = timeArr
+
+        self.timer = QtCore.QTimer()
+        self.timer.timeout.connect(self.checkEventsCore)
+        self.timer.start(50)
+
 
     def fn_fileRead(self):
         '''Read and display GPL licence.'''
@@ -64,22 +80,48 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         my_plot = VPlugin()
         self.vertLay.addWidget(my_plot)
-        #my_plot.createSample()
         my_plot.startUpdating()
-
-
 
     def fn_delPlot(self):
         '''
         Used to remove plot
         :return:
         '''
+
         wItem = self.vertLay.takeAt(0)
+
+    def checkEventsFromCore(self):
+        """
+
+        :return:
+        """
+        try:
+            coreEvents = self.coreq.get_nowait()
+        except:
+            time.sleep(0)
+
+    def sendEventToCore(self):
+        """
+
+        :return:
+        """
+        try:
+            guiEvents = self.guiq.get_nowait()
+        except:
+            time.sleep(0)
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     mw = QtGui.QMainWindow
-
-    frame = MainWindow()
+    frame = GUI()
     frame.show()
+
+    app.exec_()
+
+
+def startGUI( CoreQueue, GUIQueue, timeArr, valueArr, lock):
+    app = QApplication(sys.argv)
+    mw = QtGui.QMainWindow
+    gui = GUI(CoreQueue=CoreQueue, GUIQueue=GUIQueue, timeArr=timeArr, valueArr=valueArr, lock=lock)
+    gui.show()
     app.exec_()

@@ -41,15 +41,14 @@ import math
 
 from pyqtgraph import QtGui, QtCore
 
-class VPlugin(PlotWidget,IPlugin):
+class VPlugin(PlotWidget):
 
     count = 0.0;
     _interval = 0.1;
-    def __init__(self, name='Plot', sampleinterval=0.1, timewindow=10., size=(600,350)):
+    def __init__(self, name='Plot', sampleinterval=1, timewindow=1000., size=(600,350)):
 
         self.name = name
         PlotWidget.__init__(self)
-        IPlugin.__init__(self)
 
         self._interval = int(sampleinterval*1000)
         self._bufsize = int(timewindow/sampleinterval)
