@@ -57,6 +57,7 @@ class GUI(QMainWindow, Ui_MainWindow):
         self.addPlot.clicked.connect(self.fn_addPlot)
         self.delPlot.clicked.connect(self.fn_delPlot)
         self.quitButton.clicked.connect(self.fn_quit)
+        self.lock = lock;
 
         self.coreq = CoreQueue
         self.guiq = GUIQueue
@@ -65,7 +66,7 @@ class GUI(QMainWindow, Ui_MainWindow):
 
         self.timer = QtCore.QTimer()
         self.timer.timeout.connect(self.checkOwnEvents)
-        self.timer.start(50)
+        self.timer.start(1000)
 
 
     def fn_fileRead(self):
@@ -80,7 +81,8 @@ class GUI(QMainWindow, Ui_MainWindow):
 
         my_plot = VPlugin()
         self.vertLay.addWidget(my_plot)
-        my_plot.startUpdating()
+
+        self.plot = my_plot
 
     def fn_delPlot(self):
         '''
@@ -105,6 +107,9 @@ class GUI(QMainWindow, Ui_MainWindow):
         if event[0] == 'Core':
             if event[1] == 'Data':
                 print("GUI: New Data")
+                #self.lock.aquire()
+                self.plot.addData( self.timeArr, self.valueArr )
+                #self.lock.release()
 
     def fn_quit(self):
         self.sendEventToCore(['GUI','EndJoin'])

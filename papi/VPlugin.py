@@ -52,7 +52,9 @@ class VPlugin(PlotWidget):
 
         self._interval = int(sampleinterval*1000)
         self._bufsize = int(timewindow/sampleinterval)
-        self.databuffer = collections.deque([0.0]*self._bufsize, self._bufsize)
+        self.tDatabuffer = collections.deque([0.0]*self._bufsize, self._bufsize)
+        self.yDatabuffer = collections.deque([0.0]*self._bufsize, self._bufsize)
+
         self.x = np.linspace(-timewindow, 0.0, self._bufsize)
         self.y = np.zeros(self._bufsize, dtype=np.float)
 
@@ -66,26 +68,16 @@ class VPlugin(PlotWidget):
         self.timer.timeout.connect(self.updateplot)
         self.timer.start(self._interval)
 
-    def setData(self, x, y):
-        self.x = x;
-        self.y = y;
-
-    def startUpdating(self):
-        # QTimer
-        print("Start Timer")
-
-    def getdata(self):
-        frequency = 0.5
-        noise = random.normalvariate(0., 1.)
-        new = 10.*math.sin(time.time()*frequency*2*math.pi) + noise
-        return new
-
     def updateplot(self):
-        self.databuffer.append( self.getdata() )
-        self.y[:] = self.databuffer
+        self.x[:] = self.tDatabuffer
+        self.y[:] = self.yDatabuffer
         self.curve.setData(self.x, self.y)
 
+    def addData(self,t,y):
 
-    def createSample(self):
-        self.x = linspace(0.0,10.0,num=150)
-        self.y = list(map(sin, self.x))
+        for elem in t:
+            print(t[elem])
+            self.tDatabuffer.append( elem )
+
+        for elem in y:
+            self.yDatabuffer.append( elem )
