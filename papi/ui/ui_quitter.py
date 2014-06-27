@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'quitter.ui'
 #
-# Created: Fri Jun 27 14:40:17 2014
+# Created: Fri Jun 27 14:44:59 2014
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -36,11 +36,12 @@ class Ui_MainWindow(object):
         self.addPlot = QtGui.QPushButton(self.gridLayoutWidget)
         self.addPlot.setObjectName("addPlot")
         self.gridLayout.addWidget(self.addPlot, 0, 0, 1, 1)
-        self.frame = QtGui.QFrame(self.centralwidget)
-        self.frame.setGeometry(QtCore.QRect(20, 290, 761, 511))
-        self.frame.setFrameShape(QtGui.QFrame.StyledPanel)
-        self.frame.setFrameShadow(QtGui.QFrame.Raised)
-        self.frame.setObjectName("frame")
+        self.verticalLayoutWidget = QtGui.QWidget(self.centralwidget)
+        self.verticalLayoutWidget.setGeometry(QtCore.QRect(80, 360, 671, 441))
+        self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
+        self.vertLay = QtGui.QVBoxLayout(self.verticalLayoutWidget)
+        self.vertLay.setContentsMargins(0, 0, 0, 0)
+        self.vertLay.setObjectName("vertLay")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 797, 25))
@@ -51,6 +52,7 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
+        QtCore.QObject.connect(self.quitButton, QtCore.SIGNAL("clicked()"), MainWindow.close)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
