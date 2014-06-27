@@ -5,7 +5,7 @@ from yapsy.PluginManager import PluginManager
 from multiprocessing import Process, Value, Array, Lock, Queue
 import time
 import os
-import gui
+#import gui
 
 def main():
     # for better process tracking, print process ID of core process
@@ -59,25 +59,30 @@ def main():
             if event[1] == 'Data':
                 # new Data available, notice GUI
                 GUIQueue.put(['Core','Data'])
+                print('Core: new Data, notice GUI')
 
             if event[1] == 'EndJoin':
                 # IOP will end, join process
+                print('Core: IOP initiated termination')
                 IOPProcess.join()
                 IOPalive = 0
 
             if event[1] == 'Join':
                 # IOP needs join
+                print('Core: IOP ended and needs a join')
                 IOPProcess.join()
                 IOPalive = 0
 
         if event[0] == 'GUI':
             if event[1] == 'Join':
                 # join the GUI
+                print('Core: GUI ended and needs a join')
                 # GUIProcess.join()
                 GUIalive = 0
 
             if event[1] == 'EndJoin':
                 # GUI asks for END
+                print('Core: GUI initiated termination')
                 IOPQueue.put(['Core','End'])
                 # GUIProcess.join()
                 GUIalive = 0
@@ -85,7 +90,7 @@ def main():
         goOn = GUIalive | IOPalive
 
     # prints this debug message when core process finished/exits
-    print("Core finished")
+    print("Core: Core is finished")
 
 
 if __name__ == "__main__":

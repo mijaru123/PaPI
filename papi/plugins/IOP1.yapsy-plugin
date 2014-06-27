@@ -1,0 +1,9 @@
+[Core]
+Name = IOP1
+Module = IOP1
+
+[Documentation]
+Author = S.R
+Version = 0.1
+Website = www
+Description = test plugin1 shared memory
