@@ -25,12 +25,9 @@ along with PaPI.  If not, see <http://www.gnu.org/licenses/>.
 Contributors
 Sven Knuth
 """
-from papi import VPlugin
+
 
 __author__ = 'control'
-
-
-
 
 import sys
 
@@ -42,6 +39,8 @@ import pyqtgraph as pg
 import time
 
 from pyqtgraph import QtGui, QtCore
+
+from papi.VPlugin import VPlugin
 
 # Enable antialiasing for prettier plots
 pg.setConfigOptions(antialias=True)
@@ -57,6 +56,7 @@ class GUI(QMainWindow, Ui_MainWindow):
         self.showLicense.clicked.connect(self.fn_fileRead)
         self.addPlot.clicked.connect(self.fn_addPlot)
         self.delPlot.clicked.connect(self.fn_delPlot)
+        self.quitButton.clicked.connect(self.fn_quit)
 
         self.coreq = CoreQueue
         self.guiq = GUIQueue
@@ -64,7 +64,7 @@ class GUI(QMainWindow, Ui_MainWindow):
         self.timeArr = timeArr
 
         self.timer = QtCore.QTimer()
-        self.timer.timeout.connect(self.checkEventsCore)
+        self.timer.timeout.connect(self.checkOwnEvents)
         self.timer.start(50)
 
 
@@ -90,25 +90,34 @@ class GUI(QMainWindow, Ui_MainWindow):
 
         wItem = self.vertLay.takeAt(0)
 
-    def checkEventsFromCore(self):
+    def checkOwnEvents(self):
         """
 
         :return:
         """
         try:
-            coreEvents = self.coreq.get_nowait()
+            event = self.guiq.get_nowait()
+            self.evaluateEvent(event)
         except:
             time.sleep(0)
 
-    def sendEventToCore(self):
+    def evaluateEvent(self,event):
+        if event[0] == 'Core':
+            if event[1] == 'Data':
+                print("GUI: New Data")
+
+    def fn_quit(self):
+        self.sendEventToCore(['GUI','EndJoin'])
+        self.close()
+
+    def sendEventToCore(self,event):
         """
 
         :return:
         """
-        try:
-            guiEvents = self.guiq.get_nowait()
-        except:
-            time.sleep(0)
+
+        self.coreq.put(event)
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
