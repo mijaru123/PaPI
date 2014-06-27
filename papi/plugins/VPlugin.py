@@ -1,0 +1,92 @@
+#!/usr/bin/python3
+# -*- coding: latin-1 -*-
+
+"""
+Copyright (C) 2014 Technische Universität Berlin,
+Fakultät IV - Elektrotechnik und Informatik,
+Fachgebiet Regelungssysteme,
+Einsteinufer 17, D-10587 Berlin, Germany
+
+This file is part of PaPI.
+
+PaPI is free software: you can redistribute it and/or modify
+it under the terms of the GNU Lesser General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+PaPI is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Lesser General Public License for more details.
+
+You should have received a copy of the GNU Lesser General Public License
+along with PaPI.  If not, see <http://www.gnu.org/licenses/>.
+
+Contributors
+Sven Knuth
+"""
+
+__author__ = 'Knuth'
+
+from yapsy.IPlugin import IPlugin
+from pyqtgraph import PlotWidget
+from math import sin
+from numpy import linspace
+import numpy as np
+
+import collections
+import random
+import time
+import math
+
+from pyqtgraph import QtGui, QtCore
+
+class VPlugin(PlotWidget,IPlugin):
+
+    count = 0.0;
+    _interval = 0.1;
+    def __init__(self, name='Plot', sampleinterval=0.1, timewindow=10., size=(600,350)):
+
+        self.name = name
+        PlotWidget.__init__(self)
+        IPlugin.__init__(self)
+
+        self._interval = int(sampleinterval*1000)
+        self._bufsize = int(timewindow/sampleinterval)
+        self.databuffer = collections.deque([0.0]*self._bufsize, self._bufsize)
+        self.x = np.linspace(-timewindow, 0.0, self._bufsize)
+        self.y = np.zeros(self._bufsize, dtype=np.float)
+
+        self.resize(*size)
+        self.showGrid(x=True, y=True)
+        self.setLabel('left', 'amplitude', 'V')
+        self.setLabel('bottom', 'time', 's')
+        self.curve = self.plot(self.x, self.y, pen=(255,0,0))
+        self._interval = sampleinterval
+        self.timer = QtCore.QTimer()
+        self.timer.timeout.connect(self.updateplot)
+        self.timer.start(self._interval)
+
+    def setData(self, x, y):
+        self.x = x;
+        self.y = y;
+
+    def startUpdating(self):
+        # QTimer
+        print("Start Timer")
+
+    def getdata(self):
+        frequency = 0.5
+        noise = random.normalvariate(0., 1.)
+        new = 10.*math.sin(time.time()*frequency*2*math.pi) + noise
+        return new
+
+    def updateplot(self):
+        self.databuffer.append( self.getdata() )
+        self.y[:] = self.databuffer
+        self.curve.setData(self.x, self.y)
+
+
+    def createSample(self):
+        self.x = linspace(0.0,10.0,num=150)
+        self.y = list(map(sin, self.x))

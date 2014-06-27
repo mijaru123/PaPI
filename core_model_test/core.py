@@ -15,11 +15,12 @@ def main():
     lock = Lock()
 
     eventQueue = Queue()
+    eventQueue2 = Queue()
     sharedArr = Array('i',range(6))
 
     # Loop round the plugins and start them
     for plugin in manager.getAllPlugins():
-        plugin.plugin_object.start_plugin(sharedArr, eventQueue,lock)
+        plugin.plugin_object.start_plugin(sharedArr, eventQueue,eventQueue2,lock)
 
 
     print ('Core process id:', os.getpid())
