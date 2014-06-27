@@ -6,7 +6,7 @@ from multiprocessing import Process, Array, Lock, Queue
 import time
 import os
 
-#from papi.gui import startGUI
+from papi.gui import startGUI
 
 def main():
     # for better process tracking, print process ID of core process
@@ -40,8 +40,8 @@ def main():
 
 
 
-    #GUIProcess = Process(target=startGUI  , args=(CoreQueue,GUIQueue,sharedArr_time,sharedArr_value,lock))
-    #GUIProcess.start()
+    GUIProcess = Process(target=startGUI  , args=(CoreQueue,GUIQueue,sharedArr_time,sharedArr_value,lock))
+    GUIProcess.start()
 
     # loop for core to wait and polling event queue
     # event definition for core:
