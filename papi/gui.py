@@ -66,7 +66,7 @@ class GUI(QMainWindow, Ui_MainWindow):
 
         self.timer = QtCore.QTimer()
         self.timer.timeout.connect(self.checkOwnEvents)
-        self.timer.start(1000)
+        self.timer.start(200)
 
 
     def fn_fileRead(self):
