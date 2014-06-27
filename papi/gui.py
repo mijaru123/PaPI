@@ -106,7 +106,7 @@ class GUI(QMainWindow, Ui_MainWindow):
     def evaluateEvent(self,event):
         if event[0] == 'Core':
             if event[1] == 'Data':
-                print("GUI: New Data")
+                #print("GUI: New Data")
                 #self.lock.aquire()
                 self.plot.addData( self.timeArr, self.valueArr )
                 #self.lock.release()

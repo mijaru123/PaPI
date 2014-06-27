@@ -45,7 +45,7 @@ class VPlugin(PlotWidget):
 
     count = 0.0;
     _interval = 0.1;
-    def __init__(self, name='Plot', sampleinterval=1, timewindow=1000., size=(600,350)):
+    def __init__(self, name='Plot', sampleinterval=1, timewindow=10000., size=(600,350)):
 
         self.name = name
         PlotWidget.__init__(self)

@@ -58,30 +58,30 @@ def main():
             if event[1] == 'Data':
                 # new Data available, notice GUI
                 GUIQueue.put(['Core','Data'])
-                print('Core: new Data, notice GUI')
+                #print('Core: new Data, notice GUI')
 
             if event[1] == 'EndJoin':
                 # IOP will end, join process
-                print('Core: IOP initiated termination')
+                #print('Core: IOP initiated termination')
                 IOPProcess.join()
                 IOPalive = 0
 
             if event[1] == 'Join':
                 # IOP needs join
-                print('Core: IOP ended and needs a join')
+                #print('Core: IOP ended and needs a join')
                 IOPProcess.join()
                 IOPalive = 0
 
         if event[0] == 'GUI':
             if event[1] == 'Join':
                 # join the GUI
-                print('Core: GUI ended and needs a join')
+                #print('Core: GUI ended and needs a join')
                 GUIProcess.join()
                 GUIalive = 0
 
             if event[1] == 'EndJoin':
                 # GUI asks for END
-                print('Core: GUI initiated termination')
+                #print('Core: GUI initiated termination')
                 IOPQueue.put(['Core','End'])
                 GUIProcess.join()
                 GUIalive = 0

@@ -28,7 +28,7 @@ from multiprocessing import Process, Value, Array
 import os
 import time
 import numpy
-
+import math
 
 class IOP1(IPlugin):
     def start_plugin(self,CoreQueue, IOPQueue, sharedArr_time, sharedArr_value, lock):
@@ -48,7 +48,7 @@ class IOP1(IPlugin):
             lock.acquire()
             for i in range(10):
                 sharedArr_time[i] = t
-                sharedArr_value[i] = 1/t
+                sharedArr_value[i] = math.sin(2*math.pi*0.01*t)
                 t += 0.1
             lock.release()
             CoreQueue.put(['IOP', 'Data'])
