@@ -76,8 +76,9 @@ class VPlugin(PlotWidget):
     def addData(self,t,y):
 
         for elem in t:
-            print(t[elem])
+            print(elem)
             self.tDatabuffer.append( elem )
 
         for elem in y:
+            print(elem)
             self.yDatabuffer.append( elem )
