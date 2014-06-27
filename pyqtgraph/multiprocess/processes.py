@@ -15,7 +15,7 @@ class Process(RemoteEventHandler):
     
     This class is used to spawn and control a new python interpreter.
     It uses subprocess.Popen to start the new process and communicates with it
-    using multiprocessing.Connection objects over a network socket.
+    using multiprocessingTest.Connection objects over a network socket.
     
     By default, the remote process will immediately enter an event-processing
     loop that carries out requests send from the parent process.

@@ -31,10 +31,10 @@ import numpy
 
 
 class IOP1(IPlugin):
-    def start_plugin(self,CoreQueue,IOPQueue,sharedArr_time,sharedArr_value,lock):
+    def start_plugin(self,CoreQueue, IOPQueue, sharedArr_time, sharedArr_value, lock):
         print('Plugin1 started')
         goOn = 1
-        t=0
+        t=1
         while(goOn):
             try:
                 event=IOPQueue.get_nowait()
@@ -46,11 +46,12 @@ class IOP1(IPlugin):
                 time.sleep(0)
 
             lock.acquire()
-            sharedArr_value = numpy.random.rand(1,100)
-            sharedArr_time = numpy.linspace(t,t+10,100)
+            for i in range(10):
+                sharedArr_time[i] = t
+                sharedArr_value[i] = 1/t
+                t += 1
             lock.release()
-            time.sleep(0.1)
-            t += 1
             CoreQueue.put(['IOP', 'Data'])
+            time.sleep(0.5)
         print('IOP1: is finished')
 

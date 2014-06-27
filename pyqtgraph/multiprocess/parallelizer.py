@@ -304,7 +304,7 @@ class Tasker(object):
     #def __enter__(self):
         #self.childs = []
         #for i in range(1, self.n):
-            #c1, c2 = multiprocessing.Pipe()
+            #c1, c2 = multiprocessingTest.Pipe()
             #pid = os.fork()
             #if pid == 0:  ## child
                 #self.par.i = i
