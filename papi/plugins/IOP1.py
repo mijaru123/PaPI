@@ -47,6 +47,7 @@ class IOP1(IPlugin):
 
             lock.acquire()
             for i in range(10):
+                #time.sleep(0.01)
                 sharedArr_time[i] = t
                 sharedArr_value[i] = math.sin(2*math.pi*0.01*t)
                 t += 0.1

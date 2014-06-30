@@ -54,7 +54,7 @@ class GUI(QMainWindow, Ui_MainWindow):
         super(GUI, self).__init__(parent)
         self.setupUi(self)
         self.showLicense.clicked.connect(self.fn_fileRead)
-        self.addPlot.clicked.connect(self.fn_addPlot)
+#        self.addPlot.clicked.connect(self.fn_addPlot)
         self.delPlot.clicked.connect(self.fn_delPlot)
         self.quitButton.clicked.connect(self.fn_quit)
         self.lock = lock;
@@ -66,8 +66,9 @@ class GUI(QMainWindow, Ui_MainWindow):
 
         self.timer = QtCore.QTimer()
         self.timer.timeout.connect(self.checkOwnEvents)
-        self.timer.start(17)
+        self.timer.start(1/30)
 
+        self.fn_addPlot()
 
     def fn_fileRead(self):
         '''Read and display GPL licence.'''
@@ -81,8 +82,13 @@ class GUI(QMainWindow, Ui_MainWindow):
 
         my_plot = VPlugin()
         self.vertLay.addWidget(my_plot)
-
         self.plot = my_plot
+
+        my_plot2 = VPlugin()
+        self.vertLay.addWidget(my_plot2)
+        self.plot2 = my_plot2
+
+
 
     def fn_delPlot(self):
         '''
@@ -97,9 +103,11 @@ class GUI(QMainWindow, Ui_MainWindow):
 
         :return:
         """
+
         try:
-            event = self.guiq.get_nowait()
-            self.evaluateEvent(event)
+            while 1:
+                event = self.guiq.get_nowait()
+                self.evaluateEvent(event)
         except:
             time.sleep(0)
 
@@ -109,6 +117,9 @@ class GUI(QMainWindow, Ui_MainWindow):
                 #print("GUI: New Data")
                 #self.lock.aquire()
                 self.plot.addData( self.timeArr, self.valueArr )
+                self.plot2.addData( self.timeArr, self.valueArr )
+                self.plot.updateplot()
+                self.plot2.updateplot()
                 #self.lock.release()
 
     def fn_quit(self):

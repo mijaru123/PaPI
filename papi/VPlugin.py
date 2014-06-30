@@ -43,8 +43,8 @@ from pyqtgraph import QtGui, QtCore
 
 class VPlugin(PlotWidget):
 
-    count = 0.0;
-    _interval = 0.1;
+    _interval = 0.1
+    _refresh_time = 1
     def __init__(self, name='Plot', sampleinterval=1, timewindow=1000., size=(600,350)):
 
         self.name = name
@@ -64,14 +64,17 @@ class VPlugin(PlotWidget):
         self.setLabel('bottom', 'time', 's')
         self.curve = self.plot(self.x, self.y, pen=(255,0,0))
         self._interval = sampleinterval
-        self.timer = QtCore.QTimer()
-        self.timer.timeout.connect(self.updateplot)
-        self.timer.start(self._interval)
+
+        #self.timer = QtCore.QTimer()
+        #self.timer.timeout.connect(self.updateplot)
+        #self.timer.start(self._interval)
+        #self.timer.start(self._refresh_time)
 
     def updateplot(self):
         self.x[:] = self.tDatabuffer
         self.y[:] = self.yDatabuffer
         self.curve.setData(self.x, self.y)
+
 
     def addData(self,t,y):
 
