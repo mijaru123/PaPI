@@ -31,7 +31,7 @@ __author__ = 'control'
 
 import sys
 
-from PySide.QtGui import QMainWindow, QApplication
+from PySide.QtGui import QMainWindow, QApplication, QMdiSubWindow, QMdiArea
 
 from multiprocessing import Process, Value, Array, Lock, Queue
 
@@ -50,12 +50,16 @@ from papi.ui.ui_quitter import Ui_MainWindow
 
 class GUI(QMainWindow, Ui_MainWindow):
     goOn = 1;
+    activeScopes = {}
+    scopeID = 1
     def __init__(self, parent=None, CoreQueue=Queue(), GUIQueue=Queue(), timeArr=[], valueArr=[], lock=Lock() ):
         super(GUI, self).__init__(parent)
         self.setupUi(self)
         self.showLicense.clicked.connect(self.fn_fileRead)
-#        self.addPlot.clicked.connect(self.fn_addPlot)
+
+        self.addPlot.clicked.connect(self.fn_addPlot)
         self.delPlot.clicked.connect(self.fn_delPlot)
+
         self.quitButton.clicked.connect(self.fn_quit)
         self.lock = lock;
 
@@ -66,9 +70,9 @@ class GUI(QMainWindow, Ui_MainWindow):
 
         self.timer = QtCore.QTimer()
         self.timer.timeout.connect(self.checkOwnEvents)
-        self.timer.start(1/30)
+        self.timer.start(1/30*1000)
 
-        self.fn_addPlot()
+        #self.fn_addPlot()
 
     def fn_fileRead(self):
         '''Read and display GPL licence.'''
@@ -80,15 +84,14 @@ class GUI(QMainWindow, Ui_MainWindow):
         :return:
         '''
 
-        my_plot = VPlugin()
-        self.vertLay.addWidget(my_plot)
-        self.plot = my_plot
+        scope = VPlugin()
 
-        my_plot2 = VPlugin()
-        self.vertLay.addWidget(my_plot2)
-        self.plot2 = my_plot2
+        self.scopeArea.addSubWindow(scope.getSubWindow())
 
+        self.activeScopes[self.scopeID] = scope
+        scope.getSubWindow().show()
 
+        self.scopeID += 1
 
     def fn_delPlot(self):
         '''
@@ -105,7 +108,7 @@ class GUI(QMainWindow, Ui_MainWindow):
         """
 
         try:
-            while 1:
+            while self.guiq.full :
                 event = self.guiq.get_nowait()
                 self.evaluateEvent(event)
         except:
@@ -116,10 +119,22 @@ class GUI(QMainWindow, Ui_MainWindow):
             if event[1] == 'Data':
                 #print("GUI: New Data")
                 #self.lock.aquire()
-                self.plot.addData( self.timeArr, self.valueArr )
-                self.plot2.addData( self.timeArr, self.valueArr )
-                self.plot.updateplot()
-                self.plot2.updateplot()
+
+
+
+                for key in self.activeScopes.keys():
+                    scope = self.activeScopes[key]
+
+                    scope.addData( self.timeArr, self.valueArr )
+                    scope.updateplot()
+
+                #self.plot2.addData( self.timeArr, self.valueArr )
+               # self.plot3.addData( self.timeArr, self.valueArr )
+               # self.plot4.addData( self.timeArr, self.valueArr )
+
+                #self.plot2.updateplot()
+                #self.plot3.updateplot()
+                #self.plot4.updateplot()
                 #self.lock.release()
 
     def fn_quit(self):

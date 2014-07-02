@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'quitter.ui'
 #
-# Created: Fri Jun 27 14:44:59 2014
+# Created: Wed Jul  2 10:30:21 2014
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -12,7 +12,7 @@ from PySide import QtCore, QtGui
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(797, 870)
+        MainWindow.resize(961, 1079)
         self.centralwidget = QtGui.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.textEdit = QtGui.QTextEdit(self.centralwidget)
@@ -36,15 +36,12 @@ class Ui_MainWindow(object):
         self.addPlot = QtGui.QPushButton(self.gridLayoutWidget)
         self.addPlot.setObjectName("addPlot")
         self.gridLayout.addWidget(self.addPlot, 0, 0, 1, 1)
-        self.verticalLayoutWidget = QtGui.QWidget(self.centralwidget)
-        self.verticalLayoutWidget.setGeometry(QtCore.QRect(80, 360, 671, 441))
-        self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
-        self.vertLay = QtGui.QVBoxLayout(self.verticalLayoutWidget)
-        self.vertLay.setContentsMargins(0, 0, 0, 0)
-        self.vertLay.setObjectName("vertLay")
+        self.scopeArea = QtGui.QMdiArea(self.centralwidget)
+        self.scopeArea.setGeometry(QtCore.QRect(0, 260, 961, 771))
+        self.scopeArea.setObjectName("scopeArea")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 797, 25))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 961, 25))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtGui.QStatusBar(MainWindow)

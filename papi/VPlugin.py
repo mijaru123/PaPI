@@ -29,7 +29,8 @@ Sven Knuth
 __author__ = 'Knuth'
 
 from yapsy.IPlugin import IPlugin
-from pyqtgraph import PlotWidget
+from pyqtgraph import PlotWidget, QtGui
+
 from math import sin
 from numpy import linspace
 import numpy as np
@@ -41,14 +42,23 @@ import math
 
 from pyqtgraph import QtGui, QtCore
 
-class VPlugin(PlotWidget):
+from pyqtgraph import PlotWidget
+
+from PySide.QtGui import QMdiSubWindow
+
+class VPlugin():
 
     _interval = 0.1
     _refresh_time = 1
-    def __init__(self, name='Plot', sampleinterval=1, timewindow=1000., size=(600,350)):
+    _plotWidget = None
+    _subWindows = None
+
+    def __init__(self, name='Plot', sampleinterval=1, timewindow=1000., size=(300,300)):
 
         self.name = name
-        PlotWidget.__init__(self)
+        #PlotWidget.__init__(self)
+
+        # Set internal variables
 
         self._interval = int(sampleinterval*1000)
         self._bufsize = int(timewindow/sampleinterval)
@@ -58,12 +68,19 @@ class VPlugin(PlotWidget):
         self.x = np.linspace(-timewindow, 0.0, self._bufsize)
         self.y = np.zeros(self._bufsize, dtype=np.float)
 
-        self.resize(*size)
-        self.showGrid(x=True, y=True)
-        self.setLabel('left', 'amplitude', 'V')
-        self.setLabel('bottom', 'time', 's')
-        self.curve = self.plot(self.x, self.y, pen=(255,0,0))
+        # create
+
+        self._plotWidget = PlotWidget()
+        self._plotWidget.resize(*size)
+        self._plotWidget.showGrid(x=True, y=True)
+        self._plotWidget.setLabel('left', 'amplitude', 'V')
+        self._plotWidget.setLabel('bottom', 'time', 's')
+        self.curve = self._plotWidget.plot(self.x, self.y, pen=(255,0,0))
         self._interval = sampleinterval
+        self.curve.setPen((200,200,100))
+
+        self._subWindow = QMdiSubWindow()
+        self._subWindow.setWidget(self._plotWidget)
 
         #self.timer = QtCore.QTimer()
         #self.timer.timeout.connect(self.updateplot)
@@ -83,3 +100,10 @@ class VPlugin(PlotWidget):
 
         for elem in y:
             self.yDatabuffer.append( elem )
+
+
+    def getSubWindow(self):
+        return self._subWindow
+
+    def getPlotWidget(self):
+        return self._plotWidget
