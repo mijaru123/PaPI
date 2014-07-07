@@ -6,7 +6,7 @@ from multiprocessing import Process, Array, Lock, Queue
 import time
 import os
 
-from papi.gui import startGUI
+from papi.gui.main import startGUI
 
 def main():
     # for better process tracking, print process ID of core process

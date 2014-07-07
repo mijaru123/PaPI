@@ -41,6 +41,7 @@ import time
 from pyqtgraph import QtGui, QtCore
 
 from papi.VPlugin import VPlugin
+from papi.gui.scopemanager import ScopeManger
 
 # Enable antialiasing for prettier plots
 pg.setConfigOptions(antialias=True)
@@ -52,6 +53,8 @@ class GUI(QMainWindow, Ui_MainWindow):
     goOn = 1;
     activeScopes = {}
     scopeID = 1
+    scopeManger = None
+
     def __init__(self, parent=None, CoreQueue=Queue(), GUIQueue=Queue(), timeArr=[], valueArr=[], lock=Lock() ):
         super(GUI, self).__init__(parent)
         self.setupUi(self)
@@ -61,6 +64,7 @@ class GUI(QMainWindow, Ui_MainWindow):
         self.delPlot.clicked.connect(self.fn_delPlot)
 
         self.quitButton.clicked.connect(self.fn_quit)
+        self.scopeManagerButton.clicked.connect(self.openScopeManager)
         self.lock = lock;
 
         self.coreq = CoreQueue
@@ -70,9 +74,7 @@ class GUI(QMainWindow, Ui_MainWindow):
 
         self.timer = QtCore.QTimer()
         self.timer.timeout.connect(self.checkOwnEvents)
-        self.timer.start(1/30*1000)
-
-        #self.fn_addPlot()
+        self.timer.start(1/25*1000)
 
     def fn_fileRead(self):
         '''Read and display GPL licence.'''
@@ -91,7 +93,10 @@ class GUI(QMainWindow, Ui_MainWindow):
         self.activeScopes[self.scopeID] = scope
         scope.getSubWindow().show()
 
+        scope.setID(self.scopeID)
+
         self.scopeID += 1
+
 
     def fn_delPlot(self):
         '''
@@ -120,21 +125,11 @@ class GUI(QMainWindow, Ui_MainWindow):
                 #print("GUI: New Data")
                 #self.lock.aquire()
 
-
-
                 for key in self.activeScopes.keys():
                     scope = self.activeScopes[key]
-
                     scope.addData( self.timeArr, self.valueArr )
                     scope.updateplot()
 
-                #self.plot2.addData( self.timeArr, self.valueArr )
-               # self.plot3.addData( self.timeArr, self.valueArr )
-               # self.plot4.addData( self.timeArr, self.valueArr )
-
-                #self.plot2.updateplot()
-                #self.plot3.updateplot()
-                #self.plot4.updateplot()
                 #self.lock.release()
 
     def fn_quit(self):
@@ -149,6 +144,12 @@ class GUI(QMainWindow, Ui_MainWindow):
 
         self.coreq.put(event)
 
+    def openScopeManager(self):
+        self.scopeManger = ScopeManger(scopes=self.activeScopes)
+        self.scopeManger.listScopes()
+        self.scopeManger.show()
+
+  #  def closeScope(self):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

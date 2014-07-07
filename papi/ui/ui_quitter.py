@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'quitter.ui'
 #
-# Created: Wed Jul  2 10:30:21 2014
+# Created: Mon Jul  7 11:12:34 2014
 #      by: pyside-uic 0.2.15 running on PySide 1.2.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -16,10 +16,10 @@ class Ui_MainWindow(object):
         self.centralwidget = QtGui.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.textEdit = QtGui.QTextEdit(self.centralwidget)
-        self.textEdit.setGeometry(QtCore.QRect(280, 20, 491, 221))
+        self.textEdit.setGeometry(QtCore.QRect(370, 20, 571, 131))
         self.textEdit.setObjectName("textEdit")
         self.gridLayoutWidget = QtGui.QWidget(self.centralwidget)
-        self.gridLayoutWidget.setGeometry(QtCore.QRect(20, 20, 160, 128))
+        self.gridLayoutWidget.setGeometry(QtCore.QRect(20, 20, 151, 128))
         self.gridLayoutWidget.setObjectName("gridLayoutWidget")
         self.gridLayout = QtGui.QGridLayout(self.gridLayoutWidget)
         self.gridLayout.setContentsMargins(0, 0, 0, 0)
@@ -37,8 +37,11 @@ class Ui_MainWindow(object):
         self.addPlot.setObjectName("addPlot")
         self.gridLayout.addWidget(self.addPlot, 0, 0, 1, 1)
         self.scopeArea = QtGui.QMdiArea(self.centralwidget)
-        self.scopeArea.setGeometry(QtCore.QRect(0, 260, 961, 771))
+        self.scopeArea.setGeometry(QtCore.QRect(0, 170, 961, 861))
         self.scopeArea.setObjectName("scopeArea")
+        self.scopeManagerButton = QtGui.QPushButton(self.centralwidget)
+        self.scopeManagerButton.setGeometry(QtCore.QRect(180, 20, 121, 27))
+        self.scopeManagerButton.setObjectName("scopeManagerButton")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtGui.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 961, 25))
@@ -49,7 +52,6 @@ class Ui_MainWindow(object):
         MainWindow.setStatusBar(self.statusbar)
 
         self.retranslateUi(MainWindow)
-        QtCore.QObject.connect(self.quitButton, QtCore.SIGNAL("clicked()"), MainWindow.close)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -58,4 +60,5 @@ class Ui_MainWindow(object):
         self.quitButton.setText(QtGui.QApplication.translate("MainWindow", "Quit", None, QtGui.QApplication.UnicodeUTF8))
         self.delPlot.setText(QtGui.QApplication.translate("MainWindow", "delPlot", None, QtGui.QApplication.UnicodeUTF8))
         self.addPlot.setText(QtGui.QApplication.translate("MainWindow", "addPlot", None, QtGui.QApplication.UnicodeUTF8))
+        self.scopeManagerButton.setText(QtGui.QApplication.translate("MainWindow", "ScopeManager", None, QtGui.QApplication.UnicodeUTF8))
 
