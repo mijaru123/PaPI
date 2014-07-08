@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>574</width>
-    <height>414</height>
+    <width>683</width>
+    <height>380</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,24 +17,11 @@
    <widget class="QListWidget" name="scopeList">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>261</width>
-      <height>371</height>
+      <x>20</x>
+      <y>20</y>
+      <width>256</width>
+      <height>192</height>
      </rect>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="removeActive">
-    <property name="geometry">
-     <rect>
-      <x>380</x>
-      <y>130</y>
-      <width>98</width>
-      <height>27</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>remove</string>
     </property>
    </widget>
   </widget>

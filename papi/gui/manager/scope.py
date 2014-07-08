@@ -29,7 +29,7 @@ Sven Knuth
 __author__ = 'KnuthS'
 
 from PySide.QtGui import QMainWindow, QApplication, QMdiSubWindow, QMdiArea
-from papi.ui.gui.ui_scopemanager import Ui_ScopeManager
+from papi.ui.gui.manager.scope import Ui_ScopeManager
 
 class ScopeManger(QMainWindow, Ui_ScopeManager):
     activeScopes = {}

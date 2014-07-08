@@ -30,26 +30,24 @@ Sven Knuth
 __author__ = 'control'
 
 import sys
-
-from PySide.QtGui import QMainWindow, QApplication, QMdiSubWindow, QMdiArea
-
-from multiprocessing import Process, Value, Array, Lock, Queue
-
-import pyqtgraph as pg
 import time
 
-from pyqtgraph import QtGui, QtCore
+from PySide.QtGui import QMainWindow, QApplication
 
+import pyqtgraph as pg
+from pyqtgraph import QtGui, QtCore
 from papi.VPlugin import VPlugin
-from papi.gui.scopemanager import ScopeManger
+from papi.gui.manager.scope import ScopeManger
+
+from multiprocessing import Process, Array, Lock, Queue
 
 # Enable antialiasing for prettier plots
 pg.setConfigOptions(antialias=True)
 
-from papi.ui.ui_quitter import Ui_MainWindow
+from papi.ui.gui.main import Ui_MainGUI
 
 
-class GUI(QMainWindow, Ui_MainWindow):
+class GUI(QMainWindow, Ui_MainGUI):
     goOn = 1;
     activeScopes = {}
     scopeID = 1
@@ -61,7 +59,8 @@ class GUI(QMainWindow, Ui_MainWindow):
         self.showLicense.clicked.connect(self.fn_fileRead)
 
         self.addPlot.clicked.connect(self.fn_addPlot)
-        self.delPlot.clicked.connect(self.fn_delPlot)
+
+        self.parameterManagerButton.clicked.connect(self.openParameterManager)
 
         self.quitButton.clicked.connect(self.fn_quit)
         self.scopeManagerButton.clicked.connect(self.openScopeManager)
@@ -78,7 +77,7 @@ class GUI(QMainWindow, Ui_MainWindow):
 
     def fn_fileRead(self):
         '''Read and display GPL licence.'''
-        self.textEdit.setText(open('../README.md').read())
+        print(open('../README.md').read())
 
     def fn_addPlot(self):
         '''
@@ -148,6 +147,10 @@ class GUI(QMainWindow, Ui_MainWindow):
         self.scopeManger = ScopeManger(scopes=self.activeScopes)
         self.scopeManger.listScopes()
         self.scopeManger.show()
+
+    def openParameterManager(self):
+        print("OpenParameterManager")
+
 
   #  def closeScope(self):
 
