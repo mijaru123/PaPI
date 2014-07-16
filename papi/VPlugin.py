@@ -83,7 +83,6 @@ class VPlugin():
         self._subWindow = QMdiSubWindow()
         self._subWindow.setWidget(self._plotWidget)
 
-
         #self.timer = QtCore.QTimer()
         #self.timer.timeout.connect(self.updateplot)
         #self.timer.start(self._interval)
@@ -112,4 +111,6 @@ class VPlugin():
 
     def setID(self, id):
         self._ID = id
+
+
 

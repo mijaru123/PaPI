@@ -89,13 +89,14 @@ class GUI(QMainWindow, Ui_MainGUI):
 
         self.scopeArea.addSubWindow(scope.getSubWindow())
 
+        scope.setID(self.scopeID)
+
         self.activeScopes[self.scopeID] = scope
         scope.getSubWindow().show()
 
-        scope.setID(self.scopeID)
-
         self.scopeID += 1
 
+       # scope.getSubWindow().close.connect(self.openParameterManager)
 
     def fn_delPlot(self):
         '''
@@ -151,6 +152,9 @@ class GUI(QMainWindow, Ui_MainGUI):
     def openParameterManager(self):
         print("OpenParameterManager")
 
+
+    def scopeClosed(self):
+        print("Scope Closed")
 
   #  def closeScope(self):
 
