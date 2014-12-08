@@ -1,0 +1,46 @@
+papi.event.data package
+=======================
+
+Submodules
+----------
+
+papi.event.data.DataBase module
+-------------------------------
+
+.. automodule:: papi.event.data.DataBase
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+papi.event.data.NewBlock module
+-------------------------------
+
+.. automodule:: papi.event.data.NewBlock
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+papi.event.data.NewData module
+------------------------------
+
+.. automodule:: papi.event.data.NewData
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+papi.event.data.NewParameter module
+-----------------------------------
+
+.. automodule:: papi.event.data.NewParameter
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: papi.event.data
+    :members:
+    :undoc-members:
+    :show-inheritance:

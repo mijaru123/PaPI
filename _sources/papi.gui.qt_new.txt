@@ -1,0 +1,62 @@
+papi.gui.qt_new package
+=======================
+
+Submodules
+----------
+
+papi.gui.qt_new.create_plugin_dialog module
+-------------------------------------------
+
+.. automodule:: papi.gui.qt_new.create_plugin_dialog
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+papi.gui.qt_new.create_plugin_menu module
+-----------------------------------------
+
+.. automodule:: papi.gui.qt_new.create_plugin_menu
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+papi.gui.qt_new.custom module
+-----------------------------
+
+.. automodule:: papi.gui.qt_new.custom
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+papi.gui.qt_new.item module
+---------------------------
+
+.. automodule:: papi.gui.qt_new.item
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+papi.gui.qt_new.main module
+---------------------------
+
+.. automodule:: papi.gui.qt_new.main
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+papi.gui.qt_new.overview_menu module
+------------------------------------
+
+.. automodule:: papi.gui.qt_new.overview_menu
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: papi.gui.qt_new
+    :members:
+    :undoc-members:
+    :show-inheritance:
